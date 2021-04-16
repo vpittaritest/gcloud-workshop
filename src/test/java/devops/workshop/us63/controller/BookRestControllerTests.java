@@ -19,7 +19,7 @@ import devops.workshop.us63.repository.BookRepository;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(JUnitPlatform.class)
-public class BookRestControllerTest {
+public class BookRestControllerTests {
 	
 	    @InjectMocks
 	    BookRestController bookController;
@@ -54,7 +54,7 @@ public class BookRestControllerTest {
             				.isEqualTo(book2.getTitle());
 	        
 	        assertThat(result.get(2).getTitle())
-							.isEqualTo(book3.getTitle());
+							.isEqualTo(book2.getTitle());
 	    }
 
 }

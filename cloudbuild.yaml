@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/mvn'
+    args: ['test']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:${_TAG}', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:${_TAG}']
+  - name: "gcr.io/cloud-builders/gke-deploy"
+    args:
+      - run
+      - --filename=cloudbuild/gke
+      - --location=${_CLUSTER_REGION}
+      - --cluster=${_GKE_CLUSTER}
+substitutions:
+  _CLUSTER_REGION: europe-west4-a
+  _LOCATION: europe-west4
+  _GKE_CLUSTER: workshop-gke-cluster-1
